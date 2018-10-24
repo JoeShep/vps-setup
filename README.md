@@ -5,7 +5,7 @@
 ## Prerequisites
 
 1. Register a domain name with [Google Domains](https://domains.google.com/about/), [Gandi.net](http://www.gandi.net/) or other registrar. Look at `.com`, and `.me` domains for your personal site.
-2. [Sign up](https://m.do.co/c/47e5e578d1cd) for a DigitalOcean account. You'll get a $10 credit, which let's you try it out for two months, for free. 
+2. [Sign up](https://m.do.co/c/47e5e578d1cd) for a DigitalOcean account. You'll get a $10 credit, which let's you try it out for two months, for free.
 
 ## Getting ready
 
@@ -34,7 +34,8 @@ Your first step is to create an account for yourself.
 1. `mkdir /home/{ username }/.ssh`
 1. `touch /home/{ username }/.ssh/authorized_keys`
 1. `useradd { username } --home /home/{ username }`
-1. `passwd { username }` and you'll need to enter in the password for the user twice
+1. `passwd { username }` then press enter.
+1. You will be prompted to enter in the password for this account twice
 1. Change the default shell with `chsh -s /bin/bash { username }`
 
 ### Account security
@@ -69,13 +70,14 @@ Set the new user as owner of the home directory: `chown -R { username } /home/{ 
 
 #### Adding SSH key
 
-1. Open up a new terminal instance so that you have a command line on your local computer. 
+1. Open up a new terminal instance so that you have a command line on your local computer.
 1. In your shell, type `cat ~/.ssh/id_rsa.pub`. If you created a different SSH key name, type yours instead of `id_rsa.pub`.
 1. Copy the entire public key that got printed to the shell.
 1. Switch to your remote shell.
 1. `vim /home/{username}/.ssh/authorized_keys`
 1. Press `i`.
 1. Paste in your public key.
+1. Press `esc`
 1. `:x` to save and quit.
 
 ## Using your account
@@ -89,7 +91,6 @@ You are now logged into your DigitalOcean virtual machine on your user account. 
 
 1. Run the command `sudo apt-get update`
 1. Install base packages `sudo apt-get install curl wget unzip git ufw nodejs npm nginx`
-1. Create symlink for Node: `sudo ln -s /usr/bin/nodejs /usr/bin/node`
 1. Install useful NPM packages: `sudo npm install -g grunt-cli http-server`
 
 ## Firewall
@@ -113,8 +114,8 @@ Your server is now protected by a firewall that will deny **any** traffic other 
 
 Once you have purchased your domain you can set it up to point at the server hosting your website. To do this you will need to tell your registrar where the server is to be resolved. There are three *name servers* that you will need to tell your registrar about. The GUI for each registrar is different, but you will need to enter the following on your registrar's control panel under name servers each on a new line.
 
-`ns1.digitalocean.com`  
-`ns2.digitalocean.com`  
+`ns1.digitalocean.com`
+`ns2.digitalocean.com`
 `ns3.digitalocean.com`
 
 ## Pointing Web Traffic to Your Droplet
@@ -131,6 +132,8 @@ Nginx is a powerful web server that will allow you to serve your personal websit
 
 Digital Ocean has a [wonderful tutorial](https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-16-04) showing you how to set it up.
 
+> When you get to step 5 they show the directory where you clone your repo if it is a static personal site. `/var/www/html`
+
 If you want to serve your Django, Rails, or Node server-side capstone from your VPS, then read below about seting up gunicorn with nginx.
 
 ## SSL and secure Nginx
@@ -142,6 +145,12 @@ Then it shows you how to set up the Nginx web server to use that certificate.
 # gunicorn and nginx setup for Django app
 
 For example, if I wanted to deploy a Django REST Framework API project, I would create the following files.
+
+## Setup
+
+1. Install gunicorn with `sudo apt-get install gunicorn`
+1. Clone your Django project into a sub-directory of your choosing in your home directory.
+1. Copy the path to the project directory using `pwd`. You will need the path below.
 
 ## systemd gunicorn service
 
